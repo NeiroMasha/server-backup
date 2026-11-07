@@ -1,0 +1,12 @@
+[Unit]
+Description=Nightly server backup
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# Без HOME restic работает без кэша и лишний раз читает из облака.
+Environment=HOME=/root
+ExecStart=/usr/local/sbin/server-backup
+Nice=10
+IOSchedulingClass=idle
